@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+		<title>SignUp</title>
+
+		{% load static %}
+		<link rel="stylesheet" href="{% static '/css/signin.css' %}">
+
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> {% endcomment %}
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	</head>
+
+<body>
+
+	{% for message in messages %}
+	<div class='alert alert-{{ message.tags }} alert-dismissible fade show' role='alert'>
+		<strong>Message:</strong> {{ message }}
+		<button type='button' class = 'close' data-dismiss='alert' aria-lable="X">
+			<span aria-hidden='true'>&times;</span>
+		</button>
+	</div>
+	{% endfor %}
+
+	{% comment %} <div style="width:40vw;left:30vw;position:absolute;top:15vh"> {% endcomment %}
+	<div class="container mt-2">
+		<div id="login-row" class="signup_v4 row justify-content-center align-items-center">
+			<div id="login-column" class="col-md-5 mt-4">
+				{% comment %} <div id="login-box" class="col-md-12"> {% endcomment %}
+				<div class="card signup_v4 p-3 mb-30">
+					<div class="card-body">
+						<div class="row m-4 justify-content-center">
+							{% comment %} <div class="col-md-12 mx-4"> {% endcomment %}
+								<img style="max-width:50%" class="rounded-circle"  src="{% static 'img/login.jpg' %}" alt="My image">
+							{% comment %} </div> {% endcomment %}
+						</div>
+						{% comment %} <img class="rounded-circle z-depth-2" alt="100x100" src="C:\Users\Manik\Documents\py\Django\workout\login.jpg" data-holder-rendered="true"> {% endcomment %}
+						<ul class="nav nav-tabs" id="myTab" role="tablist">
+							<li class="nav-item" role="presentation"> 
+								<a class="nav-link {% if request.resolver_match.url_name == 'signin' %} active{% endif %}" id="login-tab" data-toggle="tab" 
+									href="#login" role="tab" aria-controls="login" aria-selected="true">Login</a>
+							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link {% if request.resolver_match.url_name == 'signup' %} active{% endif %}" id="register-tab" data-toggle="tab" 
+								href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+							</li>
+						</ul>
+
+						<div class="tab-content" id="myTabContent">
+						
+							<!-- Login From -->
+							<div class="tab-pane fade {% if request.resolver_match.url_name == 'signin' %}show active{% endif %}" id="login" role="tabpanel" aria-labelledby="login-tab">
+								<h4 class="text-center mt-4 mb-4" style="text-transform: uppercase;">Login</h4>
+								<form action='/signin' method='post'>
+									{% csrf_token %}
+									<div class="form-row">
+										
+										<div class="form-group col-md-12">
+											<label for="inputName">Your Username</label>
+											<input type="text" class="form-control" id="username" 
+												placeholder="Enter your username" name='username' required="">
+										</div>
+										<div class="form-group mt-3 col-md-12">
+											<label for="inputName">Your Password</label>
+											<input type="password" class="form-control" id="pass1" 
+												placeholder="Enter your password" name='pass1' required="">
+										</div>
+										{% comment %} <div class="form-group col-md-12">
+											<div class="d-flex flex-wrap justify-content-between align-items-center mt-4"> {% endcomment %}
+												{% comment %} <div class="custom-checkbox d-block">
+													<label class="custom-control custom-checkbox checkbox-lg">
+														<input type="checkbox" class="custom-control-input" id="customCheck1">
+														<div class="custom-control-label" for="customCheck1">Remember Password</div>
+													</label> 
+												</div> {% endcomment %}
+												<div class="mt-4 mb-2"><button class="btn full-width" type="submit">Login</button></div>
+
+												<div class="mb-3"><a style="color:#143250" href="#" target="_blank">Forgot Password?</a></div>
+											{% comment %} </div>
+										</div> {% endcomment %}
+									</div>
+								</form>
+								{% comment %} <div class="social-area">
+										<h3 class="title">Or</h3>
+										<p class="text">Sign In with social media</p>
+										<ul class="social-links">
+												<li> <a href="#"> <i class="fab fa-facebook-f"></i> </a> </li>
+												<li> <a href="#"> <i class="fab fa-google-plus-g"></i> </a> </li>
+										</ul>
+								</div> {% endcomment %}
+							</div>
+							<div class="tab-pane fade {% if request.resolver_match.url_name == 'signup' %}show active{% endif %}" id="register" role="tabpanel" aria-labelledby="register-tab">
+								<h4 class="text-center mt-4 mb-4" style="text-transform: uppercase;">Register</h4>
+								<form action='/signup' method='post'>
+									{% csrf_token %}
+									<div class="form-row">
+										<div class="form-group col-md-12">
+											<label for="inputName">Username</label>
+											<input type="text" class="form-control" id="username" name='username' placeholder="Enter your username" required="">
+										</div>
+									</div>
+									<div class="form-group mt-3 col-md-12">
+										<label for="inputName">First Name</label>
+										<input type="text" class="form-control" id="fname" name='fname' placeholder="Enter your first name" required="">
+									</div>
+									<div class="form-group mt-3 col-md-12">
+										<label for="inputName">Last Name</label>
+										<input type="text" class="form-control" id="lname" name='lname' placeholder="Enter your last name" required="">
+									</div>
+									<div class="form-row">
+										<div class="form-group mt-3 col-md-12">
+											<label for="inputName">Email Address</label>
+											<input type="email" class="form-control" id="email" name='email' placeholder="Enter your email address" required="">
+										</div>
+										<div class="form-group mt-3 col-md-12">
+											<label for="inputName">Password</label>
+											<input type="password" class="form-control" id="pass1" name='pass1' placeholder="Enter your password" required="">
+										</div>
+										<div class="form-group mt-3 col-md-12">
+											<label for="inputName">Confirm Password</label>
+											<input type="password" class="form-control" id="pass2" name='pass2' placeholder="Confirm your password" required="">
+										</div>
+									</div>
+									<div class="mt-4 mb-2"><button class="btn full-width" type="submit">Register</button></div>
+
+									<div class="mb-3"><a style="color:#143250" href="/signin">Already have an account? Login</a></div>
+									{% comment %} <div class="col-12 mt-3">
+										<div class="d-flex flex-wrap justify-content-between align-items-center">
+											<div class="custom-checkbox d-block"> {% endcomment %}
+												{% comment %} <a style="color:#143250" href="/signin" class="nav-link-inline font-size-sm">Already have an account? Login</a> {% endcomment %}
+											{% comment %} </div> {% endcomment %}
+											{% comment %} <button class="btn btn-primary mt-3 mt-sm-0" type="submit">Register</button> {% endcomment %}
+										{% comment %} </div> {% endcomment %}
+									{% comment %} </div> {% endcomment %}
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>
